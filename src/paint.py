@@ -11,7 +11,7 @@ class Paint(object):
     DEFAULT_PEN_SIZE = 5.0
     DEFAULT_COLOR = 'black'
 
-    def __init__(self):
+    def __init__(self, player, prompt):
         self.root = Tk()
 
         self.save_button = Button(self.root, text='save', command=self.save)
@@ -23,6 +23,14 @@ class Paint(object):
         self.draw_text = wordlist.get_descriptor()
         self.draw_label = Label(self.root, text='draw... ' + self.draw_text)
         self.draw_label.grid(row=0, column=1)
+
+        self.pencolour = StringVar(self.root)
+        self.pencolour.set("black")
+        self.pen_colours = ['black', 'white', 'green', 'red',
+                            'yellow', 'blue', 'cyan', 'magenta']
+
+        self.color_choice = OptionMenu(self.root, self.pencolour, *self.pen_colours)
+        self.color_choice.grid(row=0, column=3)
 
         self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
         self.choose_size_button.set(self.DEFAULT_PEN_SIZE)
@@ -38,7 +46,7 @@ class Paint(object):
         self.old_x = None
         self.old_y = None
         self.line_width = self.choose_size_button.get()
-        self.color = self.DEFAULT_COLOR
+        self.color = self.pencolour.get()
         self.eraser_on = False
         self.c.bind('<B1-Motion>', self.paint)
         self.c.bind('<ButtonRelease-1>', self.reset)
@@ -77,14 +85,13 @@ class Paint(object):
             img.save(file_name, "PNG")
 
             self.root.destroy()
-            main.Menu()
 
     def paint(self, event):
         self.line_width = self.choose_size_button.get()
         if self.old_x and self.old_y:
             self.c.create_line(self.old_x, self.old_y, event.x, event.y,
                                width=self.line_width,
-                               capstyle=ROUND, smooth=TRUE, splinesteps=36)
+                               capstyle=ROUND, smooth=TRUE, splinesteps=36, fill=self.pencolour.get())
         self.old_x = event.x
         self.old_y = event.y
 
@@ -96,5 +103,5 @@ class Paint(object):
         main.Menu()
 
 
-if __name__ == '__main__':
-    Paint()
+def create_canvas(player, prompt):
+    Paint(player, prompt)

@@ -40,6 +40,7 @@ descriptor = ["blood", "slime", "terror", "fright", "evil", "fear", "death", "co
               "parallel parking", "cold big macs", "not having a girlfriend", "minecraft", "goo", "nightmares", "chaos",
               "disorder", "unsustainable farming", "disgrace"]
 
+
 def get_term():
     return (
         random.choice(adjectives) + " " +
@@ -67,6 +68,7 @@ def is_drawn(image):
 
 
 def new_words(word_type):
+    array = []
     if word_type == WordType.ADJECTIVE:
         array = adjectives
     elif word_type == WordType.NOUN:
