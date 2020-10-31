@@ -12,7 +12,8 @@ class Crafter(object):
     DRAWING_WIDTH = 50
 
     def __init__(self, drawing_dict):
-        self.drawing_list = self.unionise_dict(drawing_dict)
+        self.drawing_dict = drawing_dict
+        self.drawing_list = self.listify_dict(drawing_dict)
         random.shuffle(self.drawing_list)
         self.root = Tk()
         self.players = len(drawing_dict.keys())
@@ -93,7 +94,17 @@ class Crafter(object):
                 self.place_image(50, 50, button_text)
 
     def craft(self):
-        pass
+        if self.pressed_buttons == 3:
+            for button in self.image_buttons:
+                artist_id = self.drawing_dict.get(button['text'])
+                print(str(artist_id) + ": " +str(main.player_score[artist_id]))
+                main.player_score[artist_id] = main.player_score[artist_id] + 1
+
+            print(main.player_score)
+
+        else:
+            print("You must have exactly three images selected!")
+
 
     def drag_start(self, event):
         """Beginning drag of an object"""
@@ -126,18 +137,24 @@ class Crafter(object):
         self.root.destroy()
         main.Menu()
 
-    def unionise_dict(self, dict):
+    def listify_dict(self, dict):
         new_list = []
         for key in dict:
-            new_list = new_list + dict[key]
+            new_list.append(key)
 
         return new_list
 
 
 if __name__ == '__main__':
     test_dict = {
-        1: ['gross', 'robot', 'disorder'],
-        2: ['munching', 'corn stalk', 'doom'],
-        3: ['ominous', 'slime', 'piracy']
+        'gross': 1,
+        'robot': 1,
+        'disorder': 1,
+        'munching': 2,
+        'corn stalk': 2,
+        'doom': 2,
+        'ominous': 3,
+        'slime': 3,
+        'piracy': 3
     }
     Crafter(test_dict)

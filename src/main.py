@@ -6,6 +6,12 @@ from src import paint
 from src import crafter
 from src.wordlist import WordType
 
+player_score = {
+    1: 0,
+    2: 0,
+    3: 0
+}
+
 
 class Menu(object):
 
@@ -28,12 +34,13 @@ class Menu(object):
 
     def start_game(self):
         count = self.player_count.get()
-        player_drawings = defaultdict(list)
+        player_drawings = []
 
         self.root.destroy()
         for i in range(1, count+1):
-
+            player_score[i] = 0
             adjective, noun, descriptor = wordlist.get_new_word(WordType.ADJECTIVE), wordlist.get_new_word(WordType.NOUN), wordlist.get_new_word(WordType.DESCRIPTOR)
+            player_drawings.extend([adjective, noun, descriptor])
 
             paint.Paint(i, wordlist.get_new_word(WordType.ADJECTIVE))
             paint.Paint(i, wordlist.get_new_word(WordType.NOUN))
