@@ -47,7 +47,8 @@ class Paint(object):
         file_name = asksaveasfilename(filetypes=[('PNG File (.png)', '.png')], defaultextension='.png')
 
         if file_name:
-            im = pyscreenshot.grab(bbox=get_window_rect())  # X1,Y1,X2,Y2
+            img = pyscreenshot.grab(bbox=get_window_rect())  # X1,Y1,X2,Y2
+            img.save(file_name, "PNG")
 
             img = Image.open(file_name)
             img = img.convert("RGBA")
