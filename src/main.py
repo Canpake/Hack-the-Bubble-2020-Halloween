@@ -50,7 +50,9 @@ class Menu(object):
             paint.Paint(i, wordlist.get_new_word(WordType.DESCRIPTOR))
 
         crafter.Crafter(player_drawings)
-        print(player_drawings)
+
+        for i in range(1, count+1):
+            crafter.Crafter(player_drawings)
 
 
 

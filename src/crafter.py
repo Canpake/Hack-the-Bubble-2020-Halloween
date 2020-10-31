@@ -96,12 +96,13 @@ class Crafter(object):
 
     def craft(self):
         if self.pressed_buttons == 3:
-            for button in self.image_buttons:
-                artist_id = self.drawing_dict.get(button['text'])
-                print(str(artist_id) + ": " +str(main.player_score[artist_id]))
+            for image in self.canvas_images:
+                artist_id = self.drawing_dict.get(image[1])
+                print(str(artist_id) + ": " + str(main.player_score[artist_id]))
                 main.player_score[artist_id] = main.player_score[artist_id] + 1
 
             print(main.player_score)
+            self.root.destroy()
 
         else:
             print("You must have exactly three images selected!")
