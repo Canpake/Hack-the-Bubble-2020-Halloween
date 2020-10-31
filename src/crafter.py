@@ -40,6 +40,7 @@ class Crafter(object):
         # generate button images on the side; also keep track of images
         self.image_buttons = []
         self.images = []
+        self.pressed_buttons = 0    # for number of buttons pressed; only 3 can be used at most
         for (i, drawing) in enumerate(self.drawing_list):
             from PIL import Image, ImageTk
             image = Image.open('../images/' + drawing + '.png')
@@ -74,11 +75,16 @@ class Crafter(object):
         self.images.append(img)
 
     def add_drawing(self, button, button_text):
-        print(button_text)
+        # toggle buttons
         if button.config('relief')[-1] == 'sunken':
+            self.pressed_buttons = self.pressed_buttons - 1
             button.config(relief="raised")
         else:
-            button.config(relief="sunken")
+            # don't do anything if 3 buttons are already pressed
+            if self.pressed_buttons < 3:
+                print(button_text)
+                self.pressed_buttons = self.pressed_buttons + 1
+                button.config(relief="sunken")
 
     def craft(self):
         pass
