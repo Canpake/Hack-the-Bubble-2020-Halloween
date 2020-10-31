@@ -56,10 +56,6 @@ class Crafter(object):
             self.image_buttons.append(image_button)
             self.images.append(image)
 
-        # create a couple of movable objects
-        self.place_image(20, 20, "../images/bruh.png")
-        self.place_image(50, 50, "../images/bruh_2.png")
-
         # bind drag-and-drop movement
         self._drag_data = {"x": 0, "y": 0, "item": None}    # this data is used to keep track of an item being dragged
         self.c.tag_bind("token", "<ButtonPress-1>", self.drag_start)
@@ -74,6 +70,9 @@ class Crafter(object):
         self.c.create_image(x, y, anchor=NW, image=img, tags="token")
         self.images.append(img)
 
+    def remove_image(self, image_path):
+        pass
+
     def add_drawing(self, button, button_text):
         # toggle buttons
         if button.config('relief')[-1] == 'sunken':
@@ -82,9 +81,12 @@ class Crafter(object):
         else:
             # don't do anything if 3 buttons are already pressed
             if self.pressed_buttons < 3:
-                print(button_text)
                 self.pressed_buttons = self.pressed_buttons + 1
                 button.config(relief="sunken")
+
+                print(button_text)
+                image_path = '../images/' + button_text + '.png'
+                self.place_image(50, 50, image_path)
 
     def craft(self):
         pass

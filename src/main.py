@@ -32,8 +32,8 @@ class Menu(object):
 
         self.root.destroy()
         for i in range(1, count+1):
+
             adjective, noun, descriptor = wordlist.get_new_word(WordType.ADJECTIVE), wordlist.get_new_word(WordType.NOUN), wordlist.get_new_word(WordType.DESCRIPTOR)
-            player_drawings[i].extend([adjective, noun, descriptor])
 
             paint.Paint(i, wordlist.get_new_word(WordType.ADJECTIVE))
             paint.Paint(i, wordlist.get_new_word(WordType.NOUN))
