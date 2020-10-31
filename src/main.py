@@ -1,6 +1,7 @@
-import wordlist
-import paint
 from tkinter import *
+
+from src import wordlist
+from src import paint
 
 class Menu(object):
 
