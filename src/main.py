@@ -1,6 +1,7 @@
+from collections import defaultdict
 from tkinter import *
 
-from src import wordlist
+from src import wordlist, crafter
 from src import paint
 from src.wordlist import WordType
 
@@ -26,11 +27,18 @@ class Menu(object):
 
     def start_game(self):
         count = self.player_count.get()
+        player_drawings = defaultdict(list)
+
         self.root.destroy()
         for i in range(1, count+1):
+            adjective, noun, descriptor = wordlist.get_new_word(WordType.ADJECTIVE), wordlist.get_new_word(WordType.NOUN), wordlist.get_new_word(WordType.DESCRIPTOR)
+            player_drawings[i].extend([adjective, noun, descriptor])
+
             paint.Paint(i, wordlist.get_new_word(WordType.ADJECTIVE))
             paint.Paint(i, wordlist.get_new_word(WordType.NOUN))
             paint.Paint(i, wordlist.get_new_word(WordType.DESCRIPTOR))
+
+        crafter.Crafter(player_drawings)
 
 
 if __name__ == '__main__':
