@@ -8,8 +8,9 @@ import random
 class Crafter(object):
 
     # Constants here
-    DRAWING_HEIGHT = 50
-    DRAWING_WIDTH = 50
+    DRAWING_HEIGHT = 100
+    DRAWING_WIDTH = 100
+    IMAGES_PER_COLUMN = 5
 
     def __init__(self, drawing_dict):
         self.drawing_list = self.unionise_dict(drawing_dict)
@@ -20,7 +21,7 @@ class Crafter(object):
 
         # set up canvas
         self.c = Canvas(self.root, bg='white', width=600, height=600)
-        self.c.grid(row=1, rowspan=self.drawings-1, columnspan=4)
+        self.c.grid(row=1, rowspan=Crafter.IMAGES_PER_COLUMN, columnspan=4)
         self.canvas_images = []     # for the images on the canvas
 
         # crafting text
@@ -49,7 +50,7 @@ class Crafter(object):
             image_button = Button(self.root, text=drawing,
                                   command=lambda c=i: self.add_drawing(self.image_buttons[c], self.image_buttons[c].cget("text")))
             image_button.config(image=image, width=Crafter.DRAWING_HEIGHT, height=Crafter.DRAWING_WIDTH)
-            image_button.grid(row=i, column=5)
+            image_button.grid(row=1 + i % Crafter.IMAGES_PER_COLUMN, column=5 + i // Crafter.IMAGES_PER_COLUMN)
 
             # add to list to stop garbage collection
             self.image_buttons.append(image_button)
