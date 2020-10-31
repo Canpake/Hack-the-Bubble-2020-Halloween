@@ -21,11 +21,10 @@ class Crafter(object):
         # set up canvas
         self.c = Canvas(self.root, bg='white', width=600, height=600)
         self.c.grid(row=1, rowspan=self.drawings-1, columnspan=4)
+        self.canvas_images = []     # for the images on the canvas
 
         # crafting text
         self.craft_text = wordlist.get_term()
-
-        self.images = []
 
         # buttons + labels
         self.craft_label = Label(self.root, text=self.craft_text)
@@ -64,20 +63,26 @@ class Crafter(object):
 
         self.root.mainloop()
 
-    def place_image(self, x, y, image_path):
-        """Create an image at the given coordinate"""
+    def place_image(self, x, y, image_text):
+        """Create an image at the given coordinate with an ID (so it can be deleted)"""
+        image_path = '../images/' + image_text + '.png'
         img = PhotoImage(file=image_path)
         self.c.create_image(x, y, anchor=NW, image=img, tags="token")
-        self.images.append(img)
+        self.canvas_images.append((img, image_text))
 
-    def remove_image(self, image_path):
-        pass
+    def remove_image(self, image_text):
+        # go through self.images and find a match
+        for (img, text) in self.canvas_images:
+            if image_text == text:
+                self.canvas_images.remove((img, text))
+                return
 
     def add_drawing(self, button, button_text):
         # toggle buttons
         if button.config('relief')[-1] == 'sunken':
             self.pressed_buttons = self.pressed_buttons - 1
             button.config(relief="raised")
+            self.remove_image(button_text)
         else:
             # don't do anything if 3 buttons are already pressed
             if self.pressed_buttons < 3:
@@ -85,8 +90,7 @@ class Crafter(object):
                 button.config(relief="sunken")
 
                 print(button_text)
-                image_path = '../images/' + button_text + '.png'
-                self.place_image(50, 50, image_path)
+                self.place_image(50, 50, button_text)
 
     def craft(self):
         pass
