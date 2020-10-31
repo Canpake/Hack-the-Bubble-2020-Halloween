@@ -7,7 +7,7 @@ class Menu(object):
     def __init__(self):
         self.root = Tk()
 
-        self.draw_button = Button(self.root, text='draw', command=self.open_paint)
+        self.draw_button = Button(self.root, text='Start Game', command=self.open_paint)
         self.draw_button.grid(row=0, column=0)
 
         self.root.mainloop()
@@ -15,6 +15,8 @@ class Menu(object):
     def open_paint(self):
         self.root.destroy()
         paint.Paint()
+
+
 
 
 if __name__ == '__main__':
