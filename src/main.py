@@ -3,6 +3,7 @@ from tkinter import *
 
 from src import wordlist, crafter
 from src import paint
+from src import crafter
 from src.wordlist import WordType
 
 
@@ -39,6 +40,8 @@ class Menu(object):
             paint.Paint(i, wordlist.get_new_word(WordType.DESCRIPTOR))
 
         crafter.Crafter(player_drawings)
+
+
 
 
 if __name__ == '__main__':

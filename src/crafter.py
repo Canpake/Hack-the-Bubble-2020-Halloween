@@ -2,6 +2,7 @@ from tkinter import *
 
 from src import main
 from src import wordlist
+import random
 
 
 class Crafter(object):
@@ -9,6 +10,8 @@ class Crafter(object):
     # Constants here
 
     def __init__(self, drawing_dict):
+        self.drawing_list = self.unionise_dict(drawing_dict)
+        random.shuffle(self.drawing_list)
         self.root = Tk()
         self.players = len(drawing_dict.keys())
 
@@ -33,12 +36,12 @@ class Crafter(object):
 
         # generate button images on the side
         self.image_buttons = []
-        for (i, drawing) in enumerate(drawing_dict.values()):
+        for drawing in self.drawing_list:
             image = PhotoImage('../images/' + drawing + '.png')
 
             image_button = Button(self.root, text='Add')
             image_button.config(image=image, width="50", height="50")
-            image_button.grid(row=i, column=7)
+            image_button.grid(row=self.drawing_list.index(drawing)//3, column=7)
 
             # add to list to stop garbage collection
             self.image_buttons.append(image_button)
@@ -95,6 +98,13 @@ class Crafter(object):
     def open_menu(self):
         self.root.destroy()
         main.Menu()
+
+    def unionise_dict(self, dict):
+        new_list = []
+        for key in dict:
+            new_list = new_list + dict[key]
+
+        return new_list
 
 
 if __name__ == '__main__':
