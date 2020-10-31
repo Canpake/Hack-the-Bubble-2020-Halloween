@@ -21,8 +21,11 @@ class Paint(object):
         self.menu_button.grid(row=0, column=0)
 
         # create a couple of movable objects
-        self.create_token(100, 100, "grey")
-        self.create_token(200, 100, "black")
+        self.place_image(20, 20, "../images/bruh.png")
+        self.place_image(50, 50, "../images/bruh_2.png")
+
+        img = PhotoImage(file="../images/bruh.png")
+        self.c.create_image(20, 20, anchor=NW, image=img, tags="token")
 
         # bind drag-and-drop movement
         self.c.tag_bind("token", "<ButtonPress-1>", self.drag_start)
@@ -44,17 +47,10 @@ class Paint(object):
         # this data is used to keep track of an item being dragged
         self._drag_data = {"x": 0, "y": 0, "item": None}
 
-    def create_token(self, x, y, color, image=None):
-        """Create a token at the given coordinate in the given color"""
-        self.c.create_oval(
-            x - 25,
-            y - 25,
-            x + 25,
-            y + 25,
-            outline=color,
-            fill=image,
-            tags=("token",),
-        )
+    def place_image(self, x, y, image_path):
+        """Create an image at the given coordinate"""
+        img = PhotoImage(file=image_path)
+        self.c.create_image(x, y, anchor=NW, image=img, tags="token")
 
     def craft(self):
         pass
