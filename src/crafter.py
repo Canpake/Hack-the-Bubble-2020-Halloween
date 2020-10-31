@@ -16,10 +16,11 @@ class Crafter(object):
         random.shuffle(self.drawing_list)
         self.root = Tk()
         self.players = len(drawing_dict.keys())
+        self.drawings = len(self.drawing_list)
 
         # set up canvas
         self.c = Canvas(self.root, bg='white', width=600, height=600)
-        self.c.grid(row=1, columnspan=6)
+        self.c.grid(row=1, rowspan=self.drawings-1, columnspan=4)
 
         # crafting text
         self.craft_text = wordlist.get_term()
@@ -31,7 +32,7 @@ class Crafter(object):
         self.craft_label.grid(row=0, column=2)
 
         self.craft_button = Button(self.root, text='Craft!', command=self.craft)
-        self.craft_button.grid(row=2, column=2)
+        self.craft_button.grid(row=0, column=3)
 
         self.menu_button = Button(self.root, text='menu', command=self.open_menu)
         self.menu_button.grid(row=0, column=0)
@@ -47,7 +48,7 @@ class Crafter(object):
 
             image_button = Button(self.root, text='Add', command=self.add_drawing)
             image_button.config(image=image, width=Crafter.DRAWING_HEIGHT, height=Crafter.DRAWING_WIDTH)
-            image_button.grid(row=self.drawing_list.index(drawing)//3, column=7)
+            image_button.grid(row=self.drawing_list.index(drawing), column=5)
 
             # add to list to stop garbage collection
             self.image_buttons.append(image_button)
