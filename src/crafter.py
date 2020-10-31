@@ -4,7 +4,7 @@ from src import main
 from src import wordlist
 
 
-class Paint(object):
+class Crafter(object):
 
     # Constants here
 
@@ -25,9 +25,6 @@ class Paint(object):
         # create a couple of movable objects
         self.place_image(20, 20, "../images/bruh.png")
         self.place_image(50, 50, "../images/bruh_2.png")
-
-        img = PhotoImage(file="../images/bruh.png")
-        self.c.create_image(20, 20, anchor=NW, image=img, tags="token")
 
         # bind drag-and-drop movement
         self.c.tag_bind("token", "<ButtonPress-1>", self.drag_start)
@@ -92,4 +89,4 @@ class Paint(object):
 
 
 if __name__ == '__main__':
-    Paint()
+    Crafter()
