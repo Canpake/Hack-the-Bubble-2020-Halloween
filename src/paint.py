@@ -2,7 +2,8 @@ from tkinter import *
 from tkinter.filedialog import asksaveasfilename
 from tkinter.colorchooser import askcolor
 import pyscreenshot
-import main
+from src import main
+from src import wordlist
 
 
 class Paint(object):
@@ -17,7 +18,11 @@ class Paint(object):
         self.save_button.grid(row=0, column=0)
 
         self.menu_button = Button(self.root, text='menu', command=self.open_menu)
-        self.menu_button.grid(row=0, column=2)
+        self.menu_button.grid(row=0, column=3)
+
+        self.draw_text = wordlist.get_descriptor()
+        self.draw_label = Label(self.root, text='draw... ' + self.draw_text)
+        self.draw_label.grid(row=0, column=1)
 
         self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
         self.choose_size_button.set(self.DEFAULT_PEN_SIZE)
@@ -50,7 +55,8 @@ class Paint(object):
             y2 = y1 + height
             return (x1, y1, x2, y2)
 
-        file_name = asksaveasfilename(filetypes=[('PNG File (.png)', '.png')], defaultextension='.png')
+        # file_name = asksaveasfilename(filetypes=[('PNG File (.png)', '.png')], defaultextension='.png')
+        file_name = '../images/' + self.draw_text + '.png'
 
         if file_name:
             img = pyscreenshot.grab(bbox=get_window_rect())  # X1,Y1,X2,Y2
@@ -88,7 +94,6 @@ class Paint(object):
     def open_menu(self):
         self.root.destroy()
         main.Menu()
-
 
 
 if __name__ == '__main__':

@@ -39,6 +39,19 @@ def get_term():
         random.choice(descriptor)
     )
 
+
+def get_adjective():
+    return random.choice(adjectives)
+
+
+def get_noun():
+    return random.choice(nouns)
+
+
+def get_descriptor():
+    return random.choice(descriptor)
+
+
 if __name__ == '__main__':
     print(get_term())
     print(get_term())
