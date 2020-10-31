@@ -8,6 +8,8 @@ import random
 class Crafter(object):
 
     # Constants here
+    DRAWING_HEIGHT = 50
+    DRAWING_WIDTH = 50
 
     def __init__(self, drawing_dict):
         self.drawing_list = self.unionise_dict(drawing_dict)
@@ -34,18 +36,22 @@ class Crafter(object):
         self.menu_button = Button(self.root, text='menu', command=self.open_menu)
         self.menu_button.grid(row=0, column=0)
 
-        # generate button images on the side
+        # generate button images on the side; also keep track of images
         self.image_buttons = []
+        self.images = []
         for drawing in self.drawing_list:
-            image = PhotoImage('../images/' + drawing + '.png')
+            from PIL import Image, ImageTk
+            image = Image.open('../images/' + drawing + '.png')
+            image = image.resize((Crafter.DRAWING_HEIGHT, Crafter.DRAWING_WIDTH), Image.ANTIALIAS)  ## The (250, 250) is (height, width)
+            image = ImageTk.PhotoImage(image)
 
-            image_button = Button(self.root, text='Add')
-            image_button.config(image=image, width="50", height="50")
+            image_button = Button(self.root, text='Add', command=self.add_drawing)
+            image_button.config(image=image, width=Crafter.DRAWING_HEIGHT, height=Crafter.DRAWING_WIDTH)
             image_button.grid(row=self.drawing_list.index(drawing)//3, column=7)
 
             # add to list to stop garbage collection
             self.image_buttons.append(image_button)
-            print('test')
+            self.images.append(image)
 
         # create a couple of movable objects
         self.place_image(20, 20, "../images/bruh.png")
@@ -64,6 +70,9 @@ class Crafter(object):
         img = PhotoImage(file=image_path)
         self.c.create_image(x, y, anchor=NW, image=img, tags="token")
         self.images.append(img)
+
+    def add_drawing(self):
+        print('test')
 
     def craft(self):
         pass
