@@ -34,19 +34,23 @@ class Menu(object):
 
     def start_game(self):
         count = self.player_count.get()
-        player_drawings = []
+        player_drawings = dict()
 
         self.root.destroy()
         for i in range(1, count+1):
             player_score[i] = 0
             adjective, noun, descriptor = wordlist.get_new_word(WordType.ADJECTIVE), wordlist.get_new_word(WordType.NOUN), wordlist.get_new_word(WordType.DESCRIPTOR)
-            player_drawings.extend([adjective, noun, descriptor])
+
+            player_drawings[adjective] = i
+            player_drawings[noun] = i
+            player_drawings[descriptor] = i
 
             paint.Paint(i, wordlist.get_new_word(WordType.ADJECTIVE))
             paint.Paint(i, wordlist.get_new_word(WordType.NOUN))
             paint.Paint(i, wordlist.get_new_word(WordType.DESCRIPTOR))
 
         crafter.Crafter(player_drawings)
+        print(player_drawings)
 
 
 
