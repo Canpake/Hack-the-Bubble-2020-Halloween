@@ -34,6 +34,7 @@ class Paint(object):
         self.c.bind('<ButtonRelease-1>', self.reset)
 
     def save(self):
+        from PIL import Image
         def get_window_rect():
             height = self.c.winfo_height()
             width = self.c.winfo_width()
@@ -43,28 +44,25 @@ class Paint(object):
             y2 = y1 + height
             return (x1, y1, x2, y2)
 
-        def convert_alpha(img):
-            img = img.convert("RGBA")
-            img_data = img.getdata()
-
-            new_data = []
-            for item in img_data:
-                # print(item)
-                if item[0] == 255 and item[1] == 255 and item[2] == 255:
-                    new_data.append((255, 255, 255, 0))
-                    print('replaced')
-                else:
-                    new_data.append(item)
-
-            img.putdata(new_data)
-
         file_name = asksaveasfilename(filetypes=[('PNG File (.png)', '.png')], defaultextension='.png')
 
         if file_name:
             im = pyscreenshot.grab(bbox=get_window_rect())  # X1,Y1,X2,Y2
-            print(type(im))
-            convert_alpha(im)   # turn white into transparency
-            im.save(file_name, 'PNG')
+
+            img = Image.open(file_name)
+            img = img.convert("RGBA")
+            datas = img.getdata()
+
+            newData = []
+            for item in datas:
+                if item[0] == 255 and item[1] == 255 and item[2] == 255:
+                    newData.append((255, 255, 255, 0))
+                else:
+                    newData.append(item)
+
+            img.putdata(newData)
+            img.save(file_name, "PNG")
+
 
     def paint(self, event):
         self.line_width = self.choose_size_button.get()
