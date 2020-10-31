@@ -1,4 +1,13 @@
 import random
+import os.path
+from enum import Enum
+
+
+class WordType(Enum):
+    NOUN = 1
+    ADJECTIVE = 2
+    DESCRIPTOR = 3
+
 
 adjectives = ["frightening", "scary", "spooky", "shivering", "eerie", "sinister", "hairy",
               "stumbling", "crying", "ghastly", "bloody", "vile", "howling", "ancient",
@@ -31,7 +40,6 @@ descriptor = ["blood", "slime", "terror", "fright", "evil", "fear", "death", "co
               "parallel parking", "cold big macs", "not having a girlfriend", "minecraft", "goo", "nightmares", "chaos",
               "disorder", "unsustainable farming", "disgrace"]
 
-
 def get_term():
     return (
         random.choice(adjectives) + " " +
@@ -50,6 +58,31 @@ def get_noun():
 
 def get_descriptor():
     return random.choice(descriptor)
+
+
+# Checks if an image already exists
+def is_drawn(image):
+    imagepath = '../images/' + image + '.png'
+    os.path.isfile(imagepath)
+
+
+def new_words(word_type):
+    if word_type == WordType.ADJECTIVE:
+        array = adjectives
+    elif word_type == WordType.NOUN:
+        array = nouns
+    elif word_type == WordType.DESCRIPTOR:
+        array = descriptor
+
+    new = []
+    for obj in array:
+        if not is_drawn(obj):
+            new.append(obj)
+    return new
+
+
+def get_new_word(word_type):
+    return random.choice(new_words(word_type))
 
 
 if __name__ == '__main__':
