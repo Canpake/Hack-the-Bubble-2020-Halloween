@@ -2,8 +2,11 @@ from tkinter import *
 from tkinter.filedialog import asksaveasfilename
 from tkinter.colorchooser import askcolor
 import pyscreenshot
+
 from src import main
 from src import wordlist
+from src import crafter
+from src.wordlist import WordType
 
 
 class Paint(object):
@@ -13,16 +16,28 @@ class Paint(object):
 
     def __init__(self):
         self.root = Tk()
+        self.word_type = WordType.NOUN
+        # draw_subject: String of what to draw; draw_text: StringVar as 'draw... {draw_subject}'
+        self.draw_subject = None
+        self.draw_text = StringVar()
 
         self.save_button = Button(self.root, text='save', command=self.save)
         self.save_button.grid(row=0, column=0)
 
-        self.menu_button = Button(self.root, text='menu', command=self.open_menu)
-        self.menu_button.grid(row=0, column=3)
-
-        self.draw_text = wordlist.get_descriptor()
-        self.draw_label = Label(self.root, text='draw... ' + self.draw_text)
+        self.update_subject()
+        self.draw_label = Label(self.root, textvariable=self.draw_text)
         self.draw_label.grid(row=0, column=1)
+
+        self.reset_button = Button(self.root, text='clear', command=self.clear)
+        self.reset_button.grid(row=0, column=2)
+
+        # self.menu_button = Button(self.root, text='menu', command=self.open_menu)
+        # self.menu_button.grid(row=0, column=3)
+
+        self.craft_button = Button(self.root, text='craft!', command=self.open_crafter)
+        self.craft_button.grid(row=0, column=3)
+
+        # self.color_button = Button(self.root, command=self.change)
 
         self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
         self.choose_size_button.set(self.DEFAULT_PEN_SIZE)
@@ -43,6 +58,11 @@ class Paint(object):
         self.c.bind('<B1-Motion>', self.paint)
         self.c.bind('<ButtonRelease-1>', self.reset)
 
+    # finds a new adjective, noun or descriptor to draw
+    def update_subject(self):
+        self.draw_subject = wordlist.get_new_word(self.word_type)
+        self.draw_text.set('draw... ' + self.draw_subject)
+
     def save(self):
         from PIL import Image
 
@@ -56,7 +76,7 @@ class Paint(object):
             return (x1, y1, x2, y2)
 
         # file_name = asksaveasfilename(filetypes=[('PNG File (.png)', '.png')], defaultextension='.png')
-        file_name = '../images/' + self.draw_text + '.png'
+        file_name = '../images/' + self.draw_subject + '.png'
 
         if file_name:
             img = pyscreenshot.grab(bbox=get_window_rect())  # X1,Y1,X2,Y2
@@ -66,18 +86,20 @@ class Paint(object):
             img = img.convert("RGBA")
             datas = img.getdata()
 
-            newData = []
+            new_data = []
             for item in datas:
                 if item[0] == 255 and item[1] == 255 and item[2] == 255:
-                    newData.append((255, 255, 255, 0))
+                    new_data.append((255, 255, 255, 0))
                 else:
-                    newData.append(item)
+                    new_data.append(item)
 
-            img.putdata(newData)
+            img.putdata(new_data)
             img.save(file_name, "PNG")
 
-            self.root.destroy()
-            main.Menu()
+            # after saving, move on to the next one + clear the screen
+            self.update_subject()
+            self.clear()
+
 
     def paint(self, event):
         self.line_width = self.choose_size_button.get()
@@ -91,9 +113,16 @@ class Paint(object):
     def reset(self, event):
         self.old_x, self.old_y = None, None
 
+    def clear(self):
+        self.c.delete('all')
+
     def open_menu(self):
         self.root.destroy()
         main.Menu()
+
+    def open_crafter(self):
+        self.root.destroy()
+        crafter.Crafter()
 
 
 if __name__ == '__main__':
