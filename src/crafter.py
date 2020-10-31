@@ -96,4 +96,9 @@ class Crafter(object):
 
 
 if __name__ == '__main__':
+    test_dict = {
+        1: ['gross', 'robot', 'disorder'],
+        2: ['munching', 'corn stalk', 'doom'],
+        3: ['ominous', 'slime', 'piracy']
+    }
     Crafter(dict())

@@ -4,6 +4,7 @@ from tkinter.colorchooser import askcolor
 import pyscreenshot
 from src import main
 from src import wordlist
+from src.wordlist import WordType
 
 
 class Paint(object):
@@ -109,3 +110,6 @@ class Paint(object):
 
 def create_canvas(player, prompt):
     Paint(player, prompt)
+
+if __name__ == '__main__':
+    Paint(1, wordlist.get_new_word(WordType.ADJECTIVE))
