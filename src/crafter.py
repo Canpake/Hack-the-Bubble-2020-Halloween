@@ -40,15 +40,15 @@ class Crafter(object):
         # generate button images on the side; also keep track of images
         self.image_buttons = []
         self.images = []
-        for drawing in self.drawing_list:
+        for (i, drawing) in enumerate(self.drawing_list):
             from PIL import Image, ImageTk
             image = Image.open('../images/' + drawing + '.png')
             image = image.resize((Crafter.DRAWING_HEIGHT, Crafter.DRAWING_WIDTH), Image.ANTIALIAS)  ## The (250, 250) is (height, width)
             image = ImageTk.PhotoImage(image)
 
-            image_button = Button(self.root, text='Add', command=self.add_drawing)
+            image_button = Button(self.root, text=drawing, command=lambda c=i: print(self.image_buttons[c].cget("text")))
             image_button.config(image=image, width=Crafter.DRAWING_HEIGHT, height=Crafter.DRAWING_WIDTH)
-            image_button.grid(row=self.drawing_list.index(drawing), column=5)
+            image_button.grid(row=i, column=5)
 
             # add to list to stop garbage collection
             self.image_buttons.append(image_button)
@@ -74,6 +74,7 @@ class Crafter(object):
 
     def add_drawing(self):
         print('test')
+
 
     def craft(self):
         pass
