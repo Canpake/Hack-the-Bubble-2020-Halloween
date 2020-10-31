@@ -66,7 +66,7 @@ class Paint(object):
     #     # self.eraser_on = eraser_mode
 
     def save(self):
-        def GetWindowRect():
+        def get_window_rect():
             height = self.c.winfo_height()
             width = self.c.winfo_width()
             x1 = self.c.winfo_rootx()
@@ -75,10 +75,10 @@ class Paint(object):
             y2 = y1 + height
             return (x1, y1, x2, y2)
 
-        file_name = asksaveasfilename()
+        file_name = asksaveasfilename(filetypes=[('PNG File (.png)', '.png')], defaultextension='.png')
 
         if file_name:
-            im = pyscreenshot.grab(bbox=GetWindowRect())  # X1,Y1,X2,Y2
+            im = pyscreenshot.grab(bbox=get_window_rect())  # X1,Y1,X2,Y2
             im.save(file_name)
 
     def paint(self, event):
