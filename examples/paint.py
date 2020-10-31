@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.filedialog import asksaveasfilename
 from tkinter.colorchooser import askcolor
 import pyscreenshot
+import main
 
 
 class Paint(object):
@@ -26,6 +27,9 @@ class Paint(object):
 
         self.save_button = Button(self.root, text='save', command=self.save)
         self.save_button.grid(row=0, column=0)
+
+        self.menu_button = Button(self.root, text='menu', command = self.open_menu)
+        self.menu_button.grid(row=0, column=2)
 
         self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
         self.choose_size_button.set(self.DEFAULT_PEN_SIZE)
@@ -94,6 +98,11 @@ class Paint(object):
 
     def reset(self, event):
         self.old_x, self.old_y = None, None
+
+    def open_menu(self):
+        self.root.destroy()
+        main.Menu()
+
 
 
 if __name__ == '__main__':
