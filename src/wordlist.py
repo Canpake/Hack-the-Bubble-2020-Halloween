@@ -4,9 +4,20 @@ from enum import Enum
 
 
 class WordType(Enum):
-    NOUN = 1
-    ADJECTIVE = 2
-    DESCRIPTOR = 3
+    NOUN = 'Noun'
+    ADJECTIVE = 'Adjective'
+    DESCRIPTOR = 'Descriptor'
+
+    @staticmethod
+    def from_str(label):
+        if label == 'Noun':
+            return WordType.NOUN
+        elif label == 'Adjective':
+            return WordType.ADJECTIVE
+        elif label == 'Descriptor':
+            return WordType.DESCRIPTOR
+        else:
+            raise NotImplementedError
 
 
 adjectives = ["frightening", "scary", "spooky", "shivering", "eerie", "sinister", "hairy",
@@ -73,12 +84,32 @@ def new_words(word_type):
         array = nouns
     elif word_type == WordType.DESCRIPTOR:
         array = descriptor
+    else:
+        array = []
 
     new = []
     for obj in array:
         if not is_drawn(obj):
             new.append(obj)
     return new
+
+
+def existing_words(word_type):
+    if word_type == WordType.ADJECTIVE:
+        array = adjectives
+    elif word_type == WordType.NOUN:
+        array = nouns
+    elif word_type == WordType.DESCRIPTOR:
+        array = descriptor
+    else:
+        array = []
+
+    existing = []
+    for obj in array:
+        if is_drawn(obj):
+            existing.append(obj)
+    return existing
+
 
 
 def get_new_word(word_type):
