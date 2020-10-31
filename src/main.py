@@ -31,9 +31,5 @@ class Menu(object):
             paint.Paint(i, wordlist.get_descriptor())
 
 
-
-
-
-
 if __name__ == '__main__':
     Menu()

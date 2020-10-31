@@ -17,8 +17,8 @@ class Paint(object):
         self.save_button = Button(self.root, text='save', command=self.save)
         self.save_button.grid(row=0, column=0)
 
-        self.menu_button = Button(self.root, text='menu', command=self.open_menu)
-        self.menu_button.grid(row=0, column=3)
+        self.reset_button = Button(self.root, text='clear', command=self.clear)
+        self.reset_button.grid(row=0, column=2)
 
         self.draw_text = wordlist.get_descriptor()
         self.draw_label = Label(self.root, text='draw... ' + self.draw_text)
@@ -97,6 +97,9 @@ class Paint(object):
 
     def reset(self, event):
         self.old_x, self.old_y = None, None
+
+    def clear(self):
+        self.c.delete('all')
 
     def open_menu(self):
         self.root.destroy()
