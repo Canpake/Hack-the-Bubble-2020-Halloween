@@ -11,6 +11,8 @@ class Paint(object):
     def __init__(self):
         self.setup()
 
+        self.images = []
+
         self.craft_label = Label(self.root, text=self.craft_text)
         self.craft_label.grid(row=0, column=2)
 
@@ -51,6 +53,8 @@ class Paint(object):
         """Create an image at the given coordinate"""
         img = PhotoImage(file=image_path)
         self.c.create_image(x, y, anchor=NW, image=img, tags="token")
+        self.images.append(img)
+
 
     def craft(self):
         pass
