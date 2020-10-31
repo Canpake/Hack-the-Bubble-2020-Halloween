@@ -7,15 +7,14 @@ class Menu(object):
 
     def __init__(self):
         self.root = Tk()
-        # self.root.geometry("300x300")
 
-        self.draw_button = Button(self.root, text='Start Game', command=self.open_paint)
+        self.draw_button = Button(self.root, text='Start Game', command=self.start_game)
         self.draw_button.grid(row=0, column=0, columnspan=2)
 
         self.player_text = Label(self.root, text='Number of players:')
         self.player_text.grid(row=1, column=0)
 
-        self.player_count = StringVar(self.root)
+        self.player_count = IntVar(self.root)
         self.player_count.set(3)
 
         self.player_select = OptionMenu(self.root, self.player_count, 3, 4, 5, 6, 7, 8)
@@ -23,14 +22,14 @@ class Menu(object):
 
         self.root.mainloop()
 
-    def open_paint(self):
-        self.root.destroy()
-        paint.Paint()
-
     def start_game(self):
+        count = self.player_count.get()
         self.root.destroy()
-        for i in range(0, self.player_count):
-            pass
+        for i in range(0, count):
+            paint.Paint(i, wordlist.get_adjective())
+            paint.Paint(i, wordlist.get_noun())
+            paint.Paint(i, wordlist.get_descriptor())
+
 
 
 
