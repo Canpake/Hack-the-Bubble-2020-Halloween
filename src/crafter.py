@@ -43,10 +43,11 @@ class Crafter(object):
         for (i, drawing) in enumerate(self.drawing_list):
             from PIL import Image, ImageTk
             image = Image.open('../images/' + drawing + '.png')
-            image = image.resize((Crafter.DRAWING_HEIGHT, Crafter.DRAWING_WIDTH), Image.ANTIALIAS)  ## The (250, 250) is (height, width)
+            image = image.resize((Crafter.DRAWING_HEIGHT, Crafter.DRAWING_WIDTH), Image.ANTIALIAS)
             image = ImageTk.PhotoImage(image)
 
-            image_button = Button(self.root, text=drawing, command=lambda c=i: print(self.image_buttons[c].cget("text")))
+            image_button = Button(self.root, text=drawing,
+                                  command=lambda c=i: self.add_drawing(self.image_buttons[c].cget("text")))
             image_button.config(image=image, width=Crafter.DRAWING_HEIGHT, height=Crafter.DRAWING_WIDTH)
             image_button.grid(row=i, column=5)
 
@@ -72,8 +73,8 @@ class Crafter(object):
         self.c.create_image(x, y, anchor=NW, image=img, tags="token")
         self.images.append(img)
 
-    def add_drawing(self):
-        print('test')
+    def add_drawing(self, button_text):
+        print(button_text)
 
 
     def craft(self):
