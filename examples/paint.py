@@ -3,6 +3,7 @@ from tkinter.filedialog import asksaveasfilename
 from tkinter.colorchooser import askcolor
 import pyscreenshot
 
+
 class Paint(object):
 
     DEFAULT_PEN_SIZE = 5.0
