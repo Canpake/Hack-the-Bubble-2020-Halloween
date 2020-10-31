@@ -47,7 +47,7 @@ class Crafter(object):
             image = ImageTk.PhotoImage(image)
 
             image_button = Button(self.root, text=drawing,
-                                  command=lambda c=i: self.add_drawing(self.image_buttons[c].cget("text")))
+                                  command=lambda c=i: self.add_drawing(self.image_buttons[c], self.image_buttons[c].cget("text")))
             image_button.config(image=image, width=Crafter.DRAWING_HEIGHT, height=Crafter.DRAWING_WIDTH)
             image_button.grid(row=i, column=5)
 
@@ -73,9 +73,12 @@ class Crafter(object):
         self.c.create_image(x, y, anchor=NW, image=img, tags="token")
         self.images.append(img)
 
-    def add_drawing(self, button_text):
+    def add_drawing(self, button, button_text):
         print(button_text)
-
+        if button.config('relief')[-1] == 'sunken':
+            button.config(relief="raised")
+        else:
+            button.config(relief="sunken")
 
     def craft(self):
         pass
