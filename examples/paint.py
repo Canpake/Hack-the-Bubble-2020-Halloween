@@ -1,6 +1,7 @@
 from tkinter import *
+from tkinter.filedialog import asksaveasfilename
 from tkinter.colorchooser import askcolor
-
+import pyscreenshot
 
 class Paint(object):
 
@@ -22,8 +23,8 @@ class Paint(object):
         # self.eraser_button = Button(self.root, text='eraser', command=self.use_eraser)
         # self.eraser_button.grid(row=0, column=3)
 
-        self.save_button = Button(self.root, text='eraser', command=self.save)
-        self.save_button.grid(row=3, column=3)
+        self.save_button = Button(self.root, text='save', command=self.save)
+        self.save_button.grid(row=0, column=0)
 
         self.choose_size_button = Scale(self.root, from_=1, to=10, orient=HORIZONTAL)
         self.choose_size_button.set(self.DEFAULT_PEN_SIZE)
@@ -64,8 +65,21 @@ class Paint(object):
     #     # self.active_button = some_button
     #     # self.eraser_on = eraser_mode
 
-    # def save(self):
-    #     win32gui.GetWindowRect
+    def save(self):
+        def GetWindowRect():
+            height = self.c.winfo_height()
+            width = self.c.winfo_width()
+            x1 = self.c.winfo_rootx()
+            x2 = x1 + width
+            y1 = self.c.winfo_rooty()
+            y2 = y1 + height
+            return (x1, y1, x2, y2)
+
+        file_name = asksaveasfilename()
+
+        if file_name:
+            im = pyscreenshot.grab(bbox=GetWindowRect())  # X1,Y1,X2,Y2
+            im.save(file_name)
 
     def paint(self, event):
         self.line_width = self.choose_size_button.get()
