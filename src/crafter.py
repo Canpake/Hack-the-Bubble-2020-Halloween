@@ -34,13 +34,15 @@ class Crafter(object):
         # generate button images on the side
         self.image_buttons = []
         for (i, drawing) in enumerate(drawing_dict.values()):
-            drawing_path = '../images/' + drawing + '.png'
-            image = PhotoImage(file=drawing_path)
-            image_button = Button(self.root)
+            image = PhotoImage('../images/' + drawing + '.png')
+
+            image_button = Button(self.root, text='Add')
             image_button.config(image=image, width="50", height="50")
             image_button.grid(row=i, column=7)
+
             # add to list to stop garbage collection
             self.image_buttons.append(image_button)
+            print('test')
 
         # create a couple of movable objects
         self.place_image(20, 20, "../images/bruh.png")
@@ -101,4 +103,4 @@ if __name__ == '__main__':
         2: ['munching', 'corn stalk', 'doom'],
         3: ['ominous', 'slime', 'piracy']
     }
-    Crafter(dict())
+    Crafter(test_dict)
