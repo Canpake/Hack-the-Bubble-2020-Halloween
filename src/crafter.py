@@ -52,7 +52,6 @@ class Crafter(object):
         self.c.create_image(x, y, anchor=NW, image=img, tags="token")
         self.images.append(img)
 
-
     def craft(self):
         pass
 

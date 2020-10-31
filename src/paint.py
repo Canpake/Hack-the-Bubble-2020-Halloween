@@ -13,6 +13,8 @@ class Paint(object):
 
     def __init__(self, player, prompt):
         self.root = Tk()
+        self.player = player
+        self.draw_text = prompt
 
         self.save_button = Button(self.root, text='save', command=self.save)
         self.save_button.grid(row=0, column=0)
@@ -20,8 +22,7 @@ class Paint(object):
         self.reset_button = Button(self.root, text='clear', command=self.clear)
         self.reset_button.grid(row=0, column=2)
 
-        self.draw_text = wordlist.get_descriptor()
-        self.draw_label = Label(self.root, text='draw... ' + self.draw_text)
+        self.draw_label = Label(self.root, text='Player ' + str(self.player) + ', draw... ' + self.draw_text)
         self.draw_label.grid(row=0, column=1)
 
         self.pencolour = StringVar(self.root)

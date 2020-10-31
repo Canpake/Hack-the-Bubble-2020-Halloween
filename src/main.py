@@ -2,6 +2,8 @@ from tkinter import *
 
 from src import wordlist
 from src import paint
+from src.wordlist import WordType
+
 
 class Menu(object):
 
@@ -25,10 +27,10 @@ class Menu(object):
     def start_game(self):
         count = self.player_count.get()
         self.root.destroy()
-        for i in range(0, count):
-            paint.Paint(i, wordlist.get_adjective())
-            paint.Paint(i, wordlist.get_noun())
-            paint.Paint(i, wordlist.get_descriptor())
+        for i in range(1, count+1):
+            paint.Paint(i, wordlist.get_new_word(WordType.ADJECTIVE))
+            paint.Paint(i, wordlist.get_new_word(WordType.NOUN))
+            paint.Paint(i, wordlist.get_new_word(WordType.DESCRIPTOR))
 
 
 if __name__ == '__main__':
